@@ -1,0 +1,45 @@
+### Relevant articles
+
+- [Intro to Apache Kafka with Spring](http://www.baeldung.com/spring-kafka)
+
+
+# Spring Kafka
+
+This is a simple Spring Boot app to demonstrate sending and receiving of messages in Kafka using spring-kafka.
+
+Start zookeeper
+
+`bin\windows\zookeeper-server-start.bat config\zookeeper.properties`<br>
+
+Start kafka servers
+
+`bin\windows\kafka-server-start.bat config\server.1.properties`<br>
+
+in server.1.properties
+```
+broker.id=1
+listeners=PLAINTEXT://:9093
+```
+
+in server.2.properties
+```
+broker.id=2
+listeners=PLAINTEXT://:9094
+```
+
+
+in server.3.properties
+```
+broker.id=3
+listeners=PLAINTEXT://:9095
+```
+
+As Kafka topics are not created automatically by default, this application requires that you create the following topics manually.
+
+`$ bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic ippon`<br>
+
+When the application runs successfully, following output is logged on to console (along with spring logs):
+
+#### Message received from the 'ippon' topic by the basic listeners with groups foo and bar
+>Received Message in group 'foo': Hello, World!<br>
+Received Message in group 'bar': Hello, World!
